@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parko Adv Advertising Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background-color: #0c456d;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+            position: relative;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        header p {
+            margin: 5px 0 15px;
+            font-size: 1.2em;
+        }
+
+        .home-icon {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            cursor: pointer;
+        }
+
+        .home-icon img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .controls select, .controls input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px;
+        }
+
+        .product-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+            padding: 15px;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .product-card h2 {
+            font-size: 1.2em;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .product-card p {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .product-card a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #113045;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .product-card a:hover {
+            background-color: #506a7d;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1em 0;
+            background-color: #5a7587;
+            color: white;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchBox = document.getElementById('searchBox');
+            const productContainer = document.querySelector('.product-container');
+            const products = Array.from(productContainer.children);
+
+            const sortSelect = document.getElementById('sortSelect');
+            const sortDropdown = document.getElementById('sortDropdown');
+
+            // Filter products based on search
+            searchBox.addEventListener('input', () => {
+                const query = searchBox.value.toLowerCase().trim();
+                if (query === '') {
+                    location.reload(); // Simulate going back to the home page
+                } else {
+                    products.forEach(product => {
+                        const title = product.querySelector('h2').textContent.toLowerCase();
+                        product.style.display = title.includes(query) ? 'block' : 'none';
+                    });
+                }
+            });
+
+            // Sort products based on category
+            sortSelect.addEventListener('change', () => {
+                const sortType = sortSelect.value;
+
+                products.forEach(product => {
+                    if (sortType === '' || product.dataset.category === sortType) {
+                        product.style.display = 'block';
+                    } else {
+                        product.style.display = 'none';
+                    }
+                });
+            });
+
+            // Sort products A-Z or Z-A
+            sortDropdown.addEventListener('change', () => {
+                const sortOrder = sortDropdown.value;
+                const sortedProducts = [...products].sort((a, b) => {
+                    const titleA = a.querySelector('h2').textContent.toLowerCase();
+                    const titleB = b.querySelector('h2').textContent.toLowerCase();
+
+                    if (sortOrder === 'az') {
+                        return titleA.localeCompare(titleB);
+                    } else if (sortOrder === 'za') {
+                        return titleB.localeCompare(titleA);
+                    }
+                    return 0; // No sorting for default
+                });
+
+                // Append sorted products back to the container
+                sortedProducts.forEach(product => productContainer.appendChild(product));
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <div class="home-icon" onclick="location.reload()">
+            <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home Icon">
+        </div>
+        <h1>Parko Adv Advertising Website</h1>
+        <p>Top 10 Best Selling Products</p>
+    </header>
+
+    <div class="controls">
+        <input type="text" id="searchBox" placeholder="Search for a product...">
+        <select id="sortSelect">
+            <option value="">All Categories</option>
+            <option value="Accessories">Accessories</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Furniture">Furniture</option>
+        </select>
+        <select id="sortDropdown">
+            <option value="">Sort By</option>
+            <option value="az">A-Z</option>
+            <option value="za">Z-A</option>
+        </select>
+    </div>
+
+    <div class="product-container">
+        <div class="product-card" data-category="Accessories">
+            <img src="C:\Users\Acer\Documents\new school project\images\handbag.jpg" alt="Designer Handbag">
+            <h2>Designer Handbag</h2>
+            <p>Elegant and spacious handbag for every occasion.</p>
+            <a href="https://ca.shein.com/Fashionable-Luxury-Vintage-Chic-Casual-High-Quality-Versatile-Women-Shoulder-Handbag-p-39310459.html?src_identifier=st%3D4%60sc%3DDesigner%20Handbags%60sr%3D0%60ps%3D1&src_module=search&src_tab_page_id=page_other1731974610872&mallCode=1&pageListType=4&imgRatio=3-4" target="_blank">View on Shein</a>
+        </div>
+        <div class="product-card" data-category="Clothing">
+            <img src="C:\Users\Acer\Documents\new school project\images\floral_dress.jpg" alt="Floral Dress">
+            <h2>Floral Summer Dress</h2>
+            <p>Light and breezy dress, perfect for summer outings.</p>
+            <a href="https://ca.shein.com/SHEIN-VCAY-Summer-Vacation-Floral-Print-High-Slit-Cross-Back-Tie-Waist-Spaghetti-Strap-Long-Dress-p-34023884.html?src_identifier=st%3D2%60sc%3Dfloral%20summer%20dress%60sr%3D0%60ps%3D1&src_module=search&src_tab_page_id=page_other1731974136129&mallCode=1&pageListType=4&imgRatio=3-4" target="_blank">View on Shein</a>
+        </div>
+        <div class="product-card" data-category="Clothing">
+            <img src="C:\Users\Acer\Documents\new school project\images\casual.jpg" alt="Casual T-shirt">
+            <h2>Casual T-Shirt</h2>
+            <p>Comfortable and trendy t-shirt for everyday wear.</p>
+            <a href="https://ca.shein.com/SHEIN-Essnce-Casual-Versatile-Solid-Color-Round-Neck-Short-Sleeve-Fitted-T-Shirt-For-Plus-Size-Women-Summer-p-47249524.html?src_identifier=st%3D4%60sc%3DCasual%20T%20Shirt%60sr%3D0%60ps%3D1&src_module=search&src_tab_page_id=page_other1731974403237&mallCode=1&pageListType=4&imgRatio=3-4" target="_blank">View on Shein</a>
+        </div>
+        <div class="product-card" data-category="Electronics">
+            <img src="C:\Users\Acer\Documents\new school project\images\bluetooth_headset.jpg" alt="Bluetooth Headphones">
+            <h2>Bluetooth Headphones</h2>
+            <p>High-quality wireless headphones with noise cancellation.</p>
+            <a href="https://www.amazon.ca/Bluetooth-New-Earpiece-Handsfree-Canceling/dp/B07NYN2BXT/ref=sr_1_1_sspa?dib=eyJ2IjoiMSJ9.pfVCEWFk8zi6FHWJ89H9oJuw9AEHyEndE8zuXpmPSyxDXa6V8EFwK7Jt1JiAGNIbowMSTU_Q_pK3mm9OwFXv5IC6IgyC93uQ5YnVlDXlVTt0zauNLuxUV9A64yXGTP-ooARzrw0hrZLtDO03uXZZEhsjq6pg-rpldnx4tcAs-l07IyR7FlpEuHDS-Tz-NjFlExxA_dgEGJ7FtuWBSS6fqeYEvDDLh_pH_gkAEBJ5r-1vupRBJpvtUD44LRv0opsuD5NkPo7EWgt0HK2gtJ3z1mq-Qa_TJVx8RAe0o5e9j_8.QjhfkxAjLzb7O0pOeqw5PnyxD1RmE-b3iDP0XUacx7Y&dib_tag=se&keywords=bluetooth%2Bheadset&qid=1731973797&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1" target="_blank">View on Amazon</a>
+        </div>
+        <div class="product-card" data-category="Electronics">
+            <img src="C:\Users\Acer\Documents\new school project\images\coffee_maker.jpg" alt="Coffee Maker">
+            <h2>Coffee Maker</h2>
+            <p>Brews delicious coffee in minutes, perfect for busy mornings.</p>
+            <a href="https://www.amazon.ca/Amazon-Basics-Coffee-Reusable-Stainless/dp/B084ZGRDM5/ref=sr_1_1_ffob_sspa?dib=eyJ2IjoiMSJ9.a8cjh6kqNwNwleL21HyPp7QxInNTaudMkAgIDMzfM19YOjRwYwDr_kSEf8Jo1ENzmsv4L2InMNMCcvkv2phRUq86Pc0udgx5x7B_P0zLqe-8qSBorjALbX9mLr4-5JLNukj3pbEaW65-hjZQQynSq0o8Rta889mjtnx9E_mfQ1tTOKIm3OW98bgOLgD5Jr-Sy9uCoDP96Su4iDyD6AML8DFqCZNTaR0iAuG0hxaWP76uxz8O4Pqe-eRvo7qjdTFo86Rehq9YGUNXia9XPEwXWmEDPjNI670l44I8SoHe7KY.E4SSAOHu_Tn9JqI5NRv6lU1Qgu4WEabII2oTbHsYwPc&dib_tag=se&keywords=coffee%2Bmaker&qid=1731974694&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1" target="_blank">View on Amazon</a>
+        </div>
+        <div class="product-card" data-category="Electronics">
+            <img src="C:\Users\Acer\Documents\new school project\images\watch.jpg" alt="Smartwatch">
+            <h2>Smartwatch</h2>
+            <p>Track your fitness and stay connected with this sleek smartwatch.</p>
+            <a href="https://www.amazon.ca/Fitness-Monitor-Waterproof-Tracker-Compatible/dp/B0D9MD4LZJ/ref=sr_1_6?crid=3H0XX7F925WTP&dib=eyJ2IjoiMSJ9.78zW2MUvYCzyzBecAhcCZqlHvntR7pr79hNSIIZQ_IyNVZtroUIB-mDdJWmo5IgrgFfNC396dq89ww8aRth2GiQA3V2qO4HO6ayrHds91Jwc31WaZF056EQ6VOVOW4s7GjhvuladVtgcMkxxmkNwQSRDwOesdhafm3j5t_N_KPBHjeltDuGhXyUvjMpJ4EKB0W-cUI2Cfwt1VoVB_T09Q6Pxe-Ft5yTH0wUUfjI5Z7YotdvG1bqiHZ70q4prEiwJ8mU1VtW5xhKE3SMcIu0DSBgyeMNMXQ32_8QEFsPfl-w.BCCmafM08w7hCMAsZXCANXgBAa_4mLaVcTUm9F_1AB8&dib_tag=se&keywords=smart+watch&qid=1731974326&sprefix=smart+%2Caps%2C125&sr=8-6" target="_blank">View on Amazon</a>
+        </div>
+        <div class="product-card" data-category="Electronics">
+            <img src="C:\Users\Acer\Documents\new school project\images\keyboard.jpg" alt="Wireless Keyboard">
+            <h2>Wireless Keyboard</h2>
+            <p>Compact and stylish keyboard with seamless connectivity.</p>
+            <a href="https://www.amazon.ca/cimetech-EasyTyping-KF10-Wireless-Labor-Saving/dp/B088CQTMY9/ref=sr_1_3_sspa?crid=1VILYBOXRCSHL&dib=eyJ2IjoiMSJ9.u7x1hMXWI-IuPptD0EqChxjB__3yUKaUFKuj3XQ-0QcmnZFf2yIMXp9J5jLfNSrdmbngUCnwWrrnK-WuXVKRzn6vuJLHbgzo-U1zZTzjgrhUAwJeRjp0RN9oxWemwU1Zhw66mYfp6rluVvdV-LdVV9ZDk0B56JLH16V5Kt5BthxM0EI3jjMg_EwSnavvCTNos612__TwLYRckRD5Z5wbj3LFr1bKv-NkJCZDJNVjO-MdZqFzBDqAmg0s6RK3Ak8Rh9cVLnYm4Z-Jkaq1lFDkJtbzOEbncjbyUAiSMRgh_tQ.UeXGmrgVzK0kJRpjTS0NUglfsji0OeLk2aL_yf4kPUk&dib_tag=se&keywords=wireless+keyboard&qid=1731974493&sprefix=wireless+key%2Caps%2C132&sr=8-3-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1" target="_blank">View on Amazon</a>
+        </div>
+        <div class="product-card" data-category="Furniture">
+            <img src="C:\Users\Acer\Documents\new school project\images\echair.jpg" alt="Ergonomic Office Chair">
+            <h2>Ergonomic Office Chair</h2>
+            
+            <p>Comfortable and stylish office chair with adjustable features.</p>
+            <a href="https://www.ikea.com/ca/en/p/flintan-office-chair-black-90489029/" target="_blank">View on IKEA</a>
+        </div>
+        <div class="product-card" data-category="Furniture">
+            <img src="C:\Users\Acer\Documents\new school project\images\table.jpg" alt="Dining Table">
+            <h2>Modern Dining Table</h2>
+            <p>Stylish and durable dining table to match your home decor.</p>
+            <a href="https://www.ikea.com/ca/en/p/skogsta-dining-table-acacia-black-70419264/" target="_blank">View on IKEA</a>
+        </div>
+    </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Feedback Form</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #0077cc;
+                color: black;
+                margin: 0;
+                padding: 0;
+            }
+    
+            footer {
+                text-align: center;
+                padding: 2em 1em;
+                background-color: #0077cc;
+            }
+    
+            .feedback-form {
+                margin: 0 auto;
+                padding: 20px;
+                max-width: 600px;
+                background-color: #e9b8d7;
+                border: 1px solid black;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                color: black;
+            }
+    
+            .feedback-form h3 {
+                margin-bottom: 15px;
+                color: black;
+            }
+    
+            .feedback-form label {
+                display: block;
+                margin-bottom: 10px;
+                color: black;
+            }
+    
+            .feedback-form input[type="radio"] {
+                margin-right: 10px;
+            }
+    
+            .feedback-form button {
+                margin-top: 15px;
+                padding: 10px 20px;
+                background-color: #f9f9f9;
+                color: black;
+                border: 1px solid black;
+                border-radius: 8px;
+                cursor: pointer;
+            }
+    
+            .feedback-form button:hover {
+                background-color: #f9f9f9;
+            }
+        </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // Custom Feedback Pop-Up
+                document.getElementById('customFeedbackBtn').addEventListener('click', () => {
+                    const feedback = prompt('Please provide your custom feedback:');
+                    if (feedback) {
+                        alert('Thank you for your feedback!');
+                    }
+                });
+    
+                // Reset Radio Buttons on Submit
+                document.getElementById('submitBtn').addEventListener('click', () => {
+                    const radioButtons = document.querySelectorAll('.feedback-form input[type="radio"]');
+                    radioButtons.forEach(radio => radio.checked = false);
+                    alert('Thank you for your feedback! Vist us Again!');
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <footer>
+            <h2>Feedback Form</h2>
+            <div class="feedback-form">
+                <h3>We value your feedback!</h3>
+                <form>
+                    <label>1. Was the website cooperative during your usage?</label>
+                    <input type="radio" name="q1" value="yes"> Yes
+                    <input type="radio" name="q1" value="no"> No
+    
+                    <label>2. Did the product images load quickly?</label>
+                    <input type="radio" name="q2" value="yes"> Yes
+                    <input type="radio" name="q2" value="no"> No
+    
+                    <label>3. Were the descriptions of the products helpful?</label>
+                    <input type="radio" name="q3" value="yes"> Yes
+                    <input type="radio" name="q3" value="no"> No
+    
+                    <label>4. Did you find the sorting and filtering tools useful?</label>
+                    <input type="radio" name="q4" value="yes"> Yes
+                    <input type="radio" name="q4" value="no"> No
+    
+                    <label>5. Was the overall design of the website appealing?</label>
+                    <input type="radio" name="q5" value="yes"> Yes
+                    <input type="radio" name="q5" value="no"> No
+                    <p><button type="button" id="submitBtn">Submit</button></p>
+                    <p> <button type="button" id="customFeedbackBtn">Add Custom Feedback</button> </p>
+                    
+                </form>
+            </div>
+        </footer>
+    </body>
+    <footer>
+        <p>&copy; 2024 Parko Adv. All rights reserved.</p>
+    </footer>
+</body>
+</html>
